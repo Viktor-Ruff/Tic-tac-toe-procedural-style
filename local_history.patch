@@ -1,0 +1,84 @@
+Index: src/TickTackToe.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/TickTackToe.java b/src/TickTackToe.java
+--- a/src/TickTackToe.java	
++++ b/src/TickTackToe.java	(date 1642942065334)
+@@ -8,6 +8,8 @@
+ 
+     private static char[][] map;
+     private static int SIZE = 3;
++    /*private static boolean SILLY_MODE = false;*/
++
+ 
+     private static final char DOT_EMPTY = '•';
+     private static final char DOT_X = '✘';
+@@ -77,6 +79,14 @@
+     }
+ 
+     private static void computerTurn(){
++
++
++        if (isMap0()) SILLY_MODE();
++        else SMART_MODE();
++
++    }
++
++    private static void SILLY_MODE(){
+         int x = -1;
+         int y = -1;
+ 
+@@ -87,7 +97,19 @@
+ 
+         System.out.println("Компьютер выбрал ячейку " + (y + 1) + "" + (x + 1));
+         map[y][x] = DOT_0;
++    }
+ 
++    private static void SMART_MODE(){
++        for(int i = 0; i < SIZE; i++){
++            for(int j = 0; j < SIZE; j++){
++                if(map[j][i] == DOT_EMPTY || map[j][i+1] == DOT_0 || map[j][i-1] == DOT_0 || map[j+1][i] == DOT_0|| map[j-1][i] == DOT_0)
++                map[j][i] = DOT_0;
++                System.out.println("Я умный");
++                break;
++                // Проверяем клетки по направлениям
++            }
++            break;
++        }
+ 
+     }
+ 
+@@ -130,7 +152,12 @@
+         if (
+                  (map[0][0] == playerSymbol && map[0][1] == playerSymbol && map[0][2] == playerSymbol) ||
+                  (map[1][0] == playerSymbol && map[1][1] == playerSymbol && map[1][2] == playerSymbol) ||
+-                 (map[2][0] == playerSymbol && map[2][1] == playerSymbol && map[2][2] == playerSymbol)) {
++                 (map[2][0] == playerSymbol && map[2][1] == playerSymbol && map[2][2] == playerSymbol) ||
++                 (map[0][0] == playerSymbol && map[1][0] == playerSymbol && map[2][0] == playerSymbol) ||
++                 (map[0][1] == playerSymbol && map[1][1] == playerSymbol && map[2][1] == playerSymbol) ||
++                 (map[0][2] == playerSymbol && map[1][2] == playerSymbol && map[2][2] == playerSymbol) ||
++                 (map[0][0] == playerSymbol && map[1][1] == playerSymbol && map[2][2] == playerSymbol) ||
++                 (map[2][0] == playerSymbol && map[1][1] == playerSymbol && map[0][2] == playerSymbol)) {
+             result = true;
+         }
+         return result;
+@@ -147,5 +174,17 @@
+         }
+         return result;
+     }
++
++    private static boolean isMap0() {
++        boolean result = false;
++
++        for (int i = 0; i < SIZE; i++) {
++            for (int j = 0; j < SIZE; j++) {
++                if (map[i][j] == DOT_0)
++                    result = true;
++            }
++        }
++        return result;
++    }
+ 
+ }
